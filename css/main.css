@@ -1,11 +1,3 @@
-@import "reset.css";
-
-p,ul,ol {
-  margin-bottom: 2em;
-  color: #1d1d1d;
-  font-family: sans-serif;
-}
-
 body {
   font-family: sans-serif;
   height: 100vh;
@@ -13,18 +5,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-h1,h2,h3,h4,h5,h6 {
-  margin: 3em 0 1em;
-}
-
-main {
-  max-width: 70ch;
-  padding: 3em 1em;
-  margin: auto;
-  line-height: 1.75;
-  font-size: 1.25em;
+  background:url(
+data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAAXNSR0IArs4c6QAAACNJREFUGFdj7Onp+V9SUsLIgATAHHQJuApkCRRtMAkUQZhRAAH7EqmQXvH2AAAAAElFTkSuQmCC
+   ) repeat;
 }
 
 #container {

@@ -1,4 +1,6 @@
-import * as THREE from '../vendor/three.module.js'
+import * as THREE from '../vendor/three.module.js';
+import {OrbitControls} from '../vendor/OrbitControls.js';
+
 
 export default class Sketch {
   constructor(options) {
@@ -8,6 +10,7 @@ export default class Sketch {
     this.addObjects();
     this.render();
     
+    this.controls = new OrbitControls( this.camera, this.container );
   }
 
   // Add the objects into the scene
@@ -15,18 +18,23 @@ export default class Sketch {
   
     this.widget = new THREE.Group();
 
-    let geometry = new THREE.CylinderBufferGeometry(0.618, 0.618, 1);
+    // Make core
+    let geometry = new THREE.CylinderBufferGeometry(.1, .1, 1.618,16);
     let mesh = new THREE.Mesh(geometry, this.material);
-
     this.widget.add(mesh);
 
-    let mesh2 = mesh.clone();
+    // Add Ribs
+    let spacing = 0.001;
+    let num = 12;
+    let height = (1/num) - spacing;
 
-    mesh2.scale.x = .381924;
-    mesh2.scale.z = .381924;
-    mesh2.scale.y = 1.6718;
-
-    this.widget.add(mesh2);
+    for (let i = 0; i < num; i++) {
+      let d = Math.abs(Math.sin(THREE.Math.mapLinear(i,0,num-1,0, Math.PI)) * 0.618) + 0.618/2;
+      let geometry = new THREE.CylinderBufferGeometry(d, d, height,16);
+      let mesh = new THREE.Mesh(geometry, this.material);
+      mesh.position.y = THREE.Math.mapLinear(i,1,num-1,-.5,.5) + height+spacing ;
+      this.widget.add(mesh);
+    }
 
     this.scene.add(this.widget);
   }
@@ -40,8 +48,9 @@ export default class Sketch {
   // Render
   render() {
 
-    this.widget.rotation.x+=0.02;
-    this.widget.rotation.y+=0.01;
+    this.widget.rotation.x += 0.01;
+    this.widget.rotation.z += 0.01;
+
 
     requestAnimationFrame(this.render.bind(this));
     this.renderer.render(this.scene, this.camera);
