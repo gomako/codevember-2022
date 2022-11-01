@@ -9,6 +9,10 @@ p,ul,ol {
 body {
   font-family: sans-serif;
   height: 100vh;
+  background-color: #eeeeee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 h1,h2,h3,h4,h5,h6 {
@@ -23,5 +27,9 @@ main {
   font-size: 1.25em;
 }
 
-  
-  
+#container {
+  width: 66vh;
+  height: 66vh;
+  background-color: white;
+  box-shadow: 10px 10px #1d1d1d;
+}
