@@ -1,5 +1,5 @@
-import * as THREE from '../vendor/three.module.js';
-import {OrbitControls} from '../vendor/OrbitControls.js';
+import * as THREE from '../libs/three.module.js';
+import {OrbitControls} from '../libs/OrbitControls.js';
 
 
 export default class Sketch {
