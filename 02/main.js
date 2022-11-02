@@ -20,11 +20,10 @@ export default class Sketch {
     this.widget = new THREE.Group();
     
     // Make core
-    let geometry = new THREE.CylinderBufferGeometry(.1, .1, 4,16);
+    let geometry = new THREE.CylinderBufferGeometry(.1, .1, 4, 32);
     let mesh = new THREE.Mesh(geometry, this.blackMat);
-    
     this.widget.add(mesh);
-
+    
     let startH = 0.1;
     let heightIncrease = 1.3;
     let heights = [];
@@ -39,13 +38,26 @@ export default class Sketch {
 
     heights.forEach((h,i) => {
       
-      let nodeGeom = new THREE.CylinderBufferGeometry(.5,.5,h,16,1);
+      let topRad, bottomRad;
+
+      // Make it conical or not..
+      if(Math.random() > 0.4999) {
+        topRad = bottomRad = 0.5;
+      } else {
+        topRad = 0.5;
+        bottomRad = 0.33;
+      }
+
+      let nodeGeom = new THREE.CylinderBufferGeometry(topRad,bottomRad,h,32,1);
+      
       let nodeMesh = new THREE.Mesh(nodeGeom, this.whiteMat);
+      
       nodeMesh.geometry.computeBoundingBox();
       
       nodeMesh.position.y = (i*(h/2))-0.5;
       
       // let radScale = (i/heights.length);// * THREE.Math.randFloat(0.3,1);
+
       let radScale =  THREE.Math.randFloat(0.3,1.5);
       nodeMesh.scale.x = radScale;
       nodeMesh.scale.z = radScale;
@@ -55,6 +67,15 @@ export default class Sketch {
     });
     segments.position.y -= totalH / 4;
     this.widget.add(segments);
+
+    // Make mast
+    let mastgeometry = new THREE.CylinderBufferGeometry(1, 1, 4, 32);
+    let mast = new THREE.Mesh(mastgeometry, this.whiteMat);
+    mast.position.y = -3.5;
+
+    this.widget.add(mast);
+
+
 
     this.scene.add(this.widget);
 
@@ -111,17 +132,11 @@ export default class Sketch {
 
     this.container.appendChild(this.renderer.domElement);
 
-    this.camera = new THREE.PerspectiveCamera(
-      70,
-      this.width / this.height,
-      0.001,
-      1000
-    );
-
-    this.camera.position.set(0, 0, 2.5);
-
     // Add lights
     this.lights();
+
+    // Add Camera
+    this.addCamera();
 
     // Set up resize event
     this.resize();
@@ -133,17 +148,32 @@ export default class Sketch {
     this.scene.add( ambientLight );
 
     const light1 = new THREE.PointLight( 0xffffff, 1, 0 );
-    light1.position.set( 0, 200, 0 );
+    light1.position.set( 0, 20, 0 );
     this.scene.add( light1 );
 
     const light2 = new THREE.PointLight( 0xffffff, 1, 0 );
-    light2.position.set( 100, 200, 100 );
+    light2.position.set( 10, 20, 10 );
     this.scene.add( light2 );
 
     const light3 = new THREE.PointLight( 0xffffff, 1, 0 );
-    light3.position.set( - 100, - 200, - 100 );
+    light3.position.set( - 10, - 20, - 10 );
     this.scene.add( light3 );
     
+  }
+
+  addCamera() {
+    this.camera = new THREE.OrthographicCamera(
+      this.width/-100, 
+      this.width/100,
+      this.height/100, 
+      this.height/-100
+      // -3.2,3.2,2.4,-2.4
+    );
+    this.camera.position.set(0, 0, 2); // position camera
+    this.camera.lookAt(0, 0, 0);       // have camera look at 0,0,0
+    this.camera.zoom = 1.75;
+    this.camera.updateProjectionMatrix();
+    // this.scene.add(new THREE.GridHelper(10,10));
   }
 
   // Resize event listener
