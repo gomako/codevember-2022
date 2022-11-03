@@ -17,12 +17,12 @@ data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAAXNSR0IArs
 #container {
   width: 66vh;
   height: 66vh;
-  background-color: white;
+  background-color: #1d1d1d;
   box-shadow: 10px 10px #1d1d1d;
 }
 
 main {
-  background-color: white;
+  background-color: whitesmoke;
   box-shadow: 10px 10px #1d1d1d;
   padding: 1rem 1.618rem;
   width: 66ch;
