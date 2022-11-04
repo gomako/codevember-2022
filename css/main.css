@@ -31,12 +31,10 @@ main {
 ul.days {
   list-style: none;
   padding: 0;
-  display: flex;
-  justify-content: space-around;
 }
 
 .days li {
-  /* margin: 0.6rem 1rem; */
+  margin-bottom: 1rem;
 }
 
 a:any-link {
